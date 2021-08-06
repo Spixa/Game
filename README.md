@@ -1,2 +1,2 @@
 # Game
- a GAME!
+ Game!
