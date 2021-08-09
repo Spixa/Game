@@ -1,22 +1,36 @@
-#include <SFML/Graphics.hpp>
-class Property
-{
+#include <string>
+#include "assert.h"
+#include <map>
+#include <iostream>
+#include "SFML/Graphics.hpp"
+#include <thread>
+#include <chrono>
+
+#define o(x) std::cout << "Game Logs > "<< x << std::endl;
+#define out(x) std::cout << "Game Logs > "<< x;
+#define outl(x) std::cout << "Game Logs > "<< x << std::endl;
+
+#define INVALID "invalid"
+
+class Var {
 public:
-	Property();
-	Property(bool bool_value);
-	Property(int int_value);
-	Property(const std::string& string_value);
-	Property(float float_value);
-	Property(const Property& property);
-	Property& operator=(const Property& property);
-	Property(Property&& property);
-	Property& operator=(Property&& property);
-	~Property();
+    Var();
+	Var(bool bool_value);
+	Var(int int_value);
+	Var(const std::string& string_value);
+	Var(float float_value);
+	Var(const Var& Var);
+	Var& operator=(const Var& Var);
+	Var(Var&& Var);
+	Var& operator=(Var&& Var);
+	~Var();
 	bool asBool() const;
 	int asInt() const;
 	float asFloat() const;
 	const std::string& asString() const;
 	bool isValid() const;
+
+    
 private:
 	union
 	{
@@ -25,65 +39,91 @@ private:
 		std::string* string_data;
 		bool bool_data;
 	};
-	enum class Type { NoInit, Bool, Int, Float, String } m_type;
+    enum class Type {None,Int,String,Float,Bool} m_type;
 };
-
-
 
 class GameObject {
 public:
-    GameObject();
-    virtual ~GameObject();
-    void setName(const std::string& name);
-	const std::string& getName() const;
-	void setProperty(const std::string& name, const Property& property);
-	Property getProperty(const std::string& name) const;
-    virtual void start();
-	virtual void update(int delta_time);
-	virtual void events(const sf::Event& event) {};
-	void enable();
-	void disable();
-	bool isEnabled() const;
-	void hide();
-	void show();
-	bool isVisible() const;
-    
-    void turnOff();
-    void turnOn();
+    std::string m_name;
+    enum class Type {Management,Ingame} m_type;
+    std::map<std::string, Var> objectVars;
+    sf::Vector2f objectPosition;
 
-	virtual void draw(sf::RenderWindow* window);
-	const Vector& getPosition() const;
-	void setPosition(const Vector& point);
-	void setPosition(float x, float y);
-	void move(const Vector& point);
-	void setSize(const Vector& size);
-protected:
-	virtual void onPropertySet(const std::string& name);
-	virtual void onPropertyGet(const std::string& name) const;
-	virtual void onActivated() {};
-	virtual void onPositionChanged(const Vector& new_pos, const Vector& old_pos) {};
-private:
-	std::string m_name;
-	bool m_started = false;
-	std::map<std::string, Property> m_properties;
-	bool m_enable;
-	bool m_visible;
-	Vector m_pos, m_size;
+    GameObject();
+    GameObject(std::string name,const Type&);
+
+    void setName(const std::string&);
+
+    void setPosition(const sf::Vector2f& pos) {
+        objectPosition = pos;
+    }
+
+    const sf::Vector2f& getPosition() const {
+        return objectPosition;
+    };
+
+    void setVar(const std::string&, const Var&);
+
+
+    virtual void start();
+    virtual void update(float deltaTime);
+    virtual void render(sf::RenderWindow* window);
+protected: // Events
+    void onVarSet(const std::string&);
 };
 
 
-class Game {
-private:
-    
 
-protected:
-    void virtual init();
-    void virtual update(float deltaTime);
+class TextureManager : public GameObject { 
+private:
+    const std::string res_path = "res/";
 
 public:
-    Game(const std::string& name, const sf::Vector2u resolution);
-    ~Game();
-    void run();
-    
-    sf::Vector2u resolution() const;
+    TextureManager();
+    void start() override;
+    std::string grab(std::string);
+    std::map<std::string,std::string> getResources() { return resources; }
+
+private:
+    std::map<std::string,std::string> resources;
+};
+
+
+
+class GameEngine {
+public:
+    // used to iterate to run update() and start() functions
+    std::vector<GameObject*> objs_stack;
+
+    // Individual objects
+    TextureManager* m_textureman;
+
+
+    sf::RenderWindow* window;
+    sf::Vector2u window_size;
+    sf::String window_title;
+
+    std::vector<sf::Drawable*> render_stack;    
+    sf::Clock deltaTimeClock;
+    float deltaTime;
+public:
+    bool running = true;
+
+    std::vector<sf::Drawable*>& getRenderStack() { return render_stack; }
+    void pushToRenderStack(sf::Drawable*);
+
+
+    GameEngine();
+    GameEngine(sf::String,sf::Vector2u);
+    void init();
+    virtual void game_init();
+    ~GameEngine();
+
+    void loop();
+    void render();
+    void update_base();
+    float getDeltaTime();
+    virtual void update();
+
+    void pushObject(GameObject*);
 };
