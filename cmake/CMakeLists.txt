@@ -21,5 +21,5 @@ find_package(Threads REQUIRED)
 
 find_package(SFML 2.5 COMPONENTS graphics window system network REQUIRED)
 
-add_executable(Game ../src/main.cpp ../src/Game.cpp ../src/gameengine.cpp)
+add_executable(Game ../src/main.cpp ../src/Game.cpp ../src/gameengine.cpp ../src/scenes.cpp)
 target_link_libraries(Game sfml-graphics sfml-window sfml-system sfml-network ${CMAKE_THREAD_LIBS_INIT} -static)

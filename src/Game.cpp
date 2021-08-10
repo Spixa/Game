@@ -21,9 +21,8 @@ void Game::run() {
 }
 
 void Game::game_init() {
-    myRect = new sf::RectangleShape({50,50});
-    o("bro man dude");
-    pushToRenderStack(myRect);
+    scene_man = new SceneManager();
+    pushObject(scene_man);
 }
 
 void Game::update() {
@@ -42,6 +41,7 @@ void Game::update() {
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
             eraseDrawable(myRect);
+            scene_man->getCurrentScene()->erase();
         } 
     }
 

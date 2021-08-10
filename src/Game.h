@@ -1,7 +1,19 @@
 #ifndef GAME_h
 #define GAME_H
-
 #include "gameengine.h"
+#include "scenes.h"
+
+class GUI : public GameObject {
+public:
+    GUI();
+
+    sf::Vector2f getGUILoc(sf::View* view) {
+        return sf::Vector2f(view->getCenter().x - (view->getSize().x / 2), view->getCenter().y - (view->getSize().y / 2));
+    }
+private:    
+
+};
+
 
 class Game : GameEngine{
 public:
@@ -17,31 +29,12 @@ private:
     enum class State {MenuState,GameState,PauseState} m_state = State::MenuState;
 
     void eraseDrawable(sf::Drawable* K);
+
+    SceneManager* scene_man; 
 };
 
-class util {
-public:
-    static int getIndex(std::vector<sf::Drawable*> v, sf::Drawable* K)
-    {
-        auto it = find(v.begin(), v.end(), K);
-    
-        // If element was found
-        if (it != v.end())
-        {
-        
-            // calculating the index
-            // of K
-            int index = it - v.begin();
-            return index;
-        }
-        else {
-            // If the element is not
-            // present in the vector
-            return -1;
-        }
-    }
 
-};
+
 
 Game& getGame();
 

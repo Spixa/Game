@@ -201,7 +201,7 @@ GameObject::GameObject() {
     m_type = Type::Management;
 }
 GameObject::GameObject(std::string name,const Type& type) : m_name(name), m_type(type) {
-
+	o("Made " << m_name);
 }
 void GameObject::setVar(const std::string& var_name,const Var& var) {
     objectVars[var_name] = var;
@@ -251,6 +251,9 @@ GameEngine::GameEngine() {
 
 GameEngine::GameEngine(sf::String title, sf::Vector2u size) : window_title(title), window_size(size) {
 	window = new sf::RenderWindow(sf::VideoMode(size.x,size.y),title,sf::Style::Close);
+	view = new sf::View();
+	window->setView(*view);
+	
 }
 void GameEngine::init() {
 	
@@ -299,9 +302,11 @@ void GameEngine::render() {
 
 	for (auto x : render_stack)
 		window->draw(*x);
-
+	
 	window->display();
 }
+
+
 
 void GameEngine::update_base() {
 	for (auto x : objs_stack) {
@@ -316,6 +321,7 @@ void GameEngine::update_base() {
 				exit(0);
 		}
 	}
+	update_view();
 
 }
 
@@ -325,4 +331,5 @@ float GameEngine::getDeltaTime() {
 
 void GameEngine::pushObject(GameObject* to_push) {
 	objs_stack.push_back(to_push);
+	to_push->start();
 }

@@ -1,3 +1,8 @@
+#ifndef GAMEENGINE_H
+#define GAMEENGINE_H
+
+
+
 #include <string>
 #include "assert.h"
 #include <map>
@@ -6,11 +11,10 @@
 #include <thread>
 #include <chrono>
 
-#define o(x) std::cout << "Game Logs > "<< x << std::endl;
-#define out(x) std::cout << "Game Logs > "<< x;
-#define outl(x) std::cout << "Game Logs > "<< x << std::endl;
-
 #define INVALID "invalid"
+#define o(x) std::cout << "Game Logs > "<< x << std::endl;
+#define out_(x) std::cout << "Game Logs > "<< x;
+#define outl(x) std::cout << "Game Logs > "<< x << std::endl;
 
 class Var {
 public:
@@ -100,6 +104,7 @@ public:
 
 
     sf::RenderWindow* window;
+    sf::View* view;
     sf::Vector2u window_size;
     sf::String window_title;
 
@@ -110,8 +115,7 @@ public:
     bool running = true;
 
     std::vector<sf::Drawable*>& getRenderStack() { return render_stack; }
-    void pushToRenderStack(sf::Drawable*);
-
+    void pushToRenderStack  (sf::Drawable*  ); 
 
     GameEngine();
     GameEngine(sf::String,sf::Vector2u);
@@ -124,6 +128,13 @@ public:
     void update_base();
     float getDeltaTime();
     virtual void update();
+    void update_view() {
+        view->setSize(window->getSize().x,window->getSize().y);
+    }
+    
+    void setCenter(sf::Vector2u loc) { view->setCenter(loc.x,loc.y); }
 
     void pushObject(GameObject*);
 };
+
+#endif
