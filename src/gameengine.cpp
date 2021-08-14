@@ -254,6 +254,7 @@ GameEngine::GameEngine(sf::String title, sf::Vector2u size) : window_title(title
 	window = new sf::RenderWindow(sf::VideoMode(size.x,size.y),title,sf::Style::Close | sf::Style::Resize);
 	view = new sf::View();
 	window->setView(*view);
+	view->setSize(window->getSize().x,window->getSize().y);
 	
 }
 void GameEngine::init() {

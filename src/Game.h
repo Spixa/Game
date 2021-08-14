@@ -36,6 +36,10 @@ private:
     void eraseDrawable(sf::Drawable* K);
 
     SceneManager* scene_man; 
+
+private:
+    Game(Game const&);
+    Game& operator=(Game const&);
 };
 
 Game* getGame();

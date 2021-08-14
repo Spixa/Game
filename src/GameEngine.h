@@ -26,7 +26,6 @@ public:
 	float asFloat() const;
 	const std::string& asString() const;
 	bool isValid() const;
-
     
 private:
 	union
@@ -122,6 +121,7 @@ public:
     virtual void update();
     void update_view() {
         view->setSize((float) window->getSize().x,(float) window->getSize().y);
+
     }
     TextureManager* getTextureManager() { return m_textureman; }
     void setCenter(sf::Vector2u loc) { view->setCenter(loc.x,loc.y); }

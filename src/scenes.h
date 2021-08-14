@@ -5,6 +5,7 @@
 #include <vector>
 #include "GameEngine.h"
 #include "utils.h"
+#include "GUI.h"
 
 enum class Scenes {
     MainmenuScene
@@ -12,11 +13,11 @@ enum class Scenes {
 
 class Scene : public GameObject {
 public:
-    std::vector<sf::Drawable*> scene_objects;
+    std::vector<GUIObject*> scene_objects;
     std::string m_name;
 public:
-    void bindDrawable(sf::Drawable*);
-    void removeDrawable(sf::Drawable*);    
+    void bindGUIObject(GUIObject*);
+    void removeGUIObject(GUIObject*);    
 
     void start() override;
     void update(float deltaTime) override;
@@ -30,7 +31,7 @@ public:
 
     virtual void erase_derived();
     void erase();
-    std::vector<sf::Drawable*>* getSceneDrawables() { return &scene_objects;}
+    std::vector<GUIObject*>* getSceneGUIObjects() { return &scene_objects;}
 };
 
 
@@ -41,7 +42,7 @@ public:
     void erase_derived() override;
     void updateScene(float deltaTime) override; 
 protected:
-    sf::Text* text_gamename;
+    Text* someText;
 
 
     sf::Font font;

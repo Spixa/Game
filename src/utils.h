@@ -6,7 +6,8 @@
 
 class util {
 public:
-    static int getIndex(std::vector<sf::Drawable*> v, sf::Drawable* K)
+    template <typename T>
+    static int getIndex(std::vector<T*> v, sf::Drawable* K)
     {
         auto it = find(v.begin(), v.end(), K);
     

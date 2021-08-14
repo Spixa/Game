@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game* Game::m_instance = nullptr;
+Game* Game::m_instance = 0;
 
 
 Game::Game() : GameEngine("Kewl Game", {720,560}) {
@@ -8,8 +8,8 @@ Game::Game() : GameEngine("Kewl Game", {720,560}) {
 }
 
 Game* Game::getInstance() { 
-    if (m_instance == nullptr) {
-        return new Game();
+    if (m_instance == 0) {
+        m_instance = new Game();
     }
     return m_instance;
 

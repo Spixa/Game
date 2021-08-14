@@ -3,11 +3,11 @@ Scene::Scene(std::string name) : m_name(name), GameObject(std::string("SceneMana
 
 }
 
-void Scene::bindDrawable(sf::Drawable* d) {
+void Scene::bindGUIObject(GUIObject* d) {
     scene_objects.push_back(d);
 }
 
-void Scene::removeDrawable(sf::Drawable* d) {
+void Scene::removeGUIObject(GUIObject* d) {
     int index = util::getIndex(scene_objects,d); 
     if (index <= scene_objects.size()) {
         scene_objects.erase(scene_objects.begin() + index);
@@ -20,6 +20,7 @@ void Scene::start() {
 
 void Scene::render(sf::RenderWindow* window) {
     for (auto x : scene_objects) {
+        x->predraw(window);
         window->draw(*x);
     }
 }
@@ -30,7 +31,7 @@ void Scene::update(float deltaTime) {
 
 void Scene::erase() {
     for (auto x : scene_objects) {
-        removeDrawable(x);
+        removeGUIObject(x);
     }
 }
 
@@ -43,10 +44,10 @@ MenuScene::MenuScene() : Scene("menu_scene") {
     if (!font.loadFromFile("res/fonts/common_font.ttf")) {
         outl("sus");
     }
-    
-    text_gamename = new sf::Text("Sus Imposter Aewouga LMFAO",font,24);
-    bindDrawable(text_gamename);
-    text_gamename->setPosition(10,20);
+    someText = new Text();
+    someText->make("res/fonts/common_font.ttf", 24);
+    someText->setString("bromandude");
+    bindGUIObject(someText);
 
 }
 
@@ -54,8 +55,9 @@ void MenuScene::erase_derived() {
     
 }
 void MenuScene::updateScene(float deltaTime) {
-    text_gamename->setString("delta time: " + util::to_str<float>(deltaTime));
+    
 }
+
 
 ////////////////////////////////////////////
 

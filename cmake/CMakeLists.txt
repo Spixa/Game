@@ -24,6 +24,6 @@ find_package(Threads REQUIRED)
 
 find_package(SFML 2.5 COMPONENTS graphics window system network REQUIRED)
 
-add_executable(Game ../src/main.cpp ../src/Game.cpp ../src/gameengine.cpp ../src/scenes.cpp)
+add_executable(Game ../src/main.cpp ../src/Game.cpp ../src/gameengine.cpp ../src/scenes.cpp ../src/GUI.cpp ../src/GUI.h)
 target_link_libraries(Game sfml-graphics sfml-window sfml-system sfml-network ${CMAKE_THREAD_LIBS_INIT} -static)
 set_target_properties(Game PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/..")
