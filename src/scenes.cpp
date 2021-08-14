@@ -25,7 +25,7 @@ void Scene::render(sf::RenderWindow* window) {
 }
 
 void Scene::update(float deltaTime) {
-
+    updateScene(deltaTime);
 }
 
 void Scene::erase() {
@@ -38,6 +38,26 @@ void Scene::erase_derived() {
     o("Undefined behaviour while erasing scene: " << m_name);
 }
 /////////////////////////////////////////////
+
+MenuScene::MenuScene() : Scene("menu_scene") {
+    if (!font.loadFromFile("res/fonts/common_font.ttf")) {
+        outl("sus");
+    }
+    
+    text_gamename = new sf::Text("Sus Imposter Aewouga LMFAO",font,24);
+    bindDrawable(text_gamename);
+    text_gamename->setPosition(10,20);
+
+}
+
+void MenuScene::erase_derived() {
+    
+}
+void MenuScene::updateScene(float deltaTime) {
+    text_gamename->setString("delta time: " + util::to_str<float>(deltaTime));
+}
+
+////////////////////////////////////////////
 
 void SceneManager::startScene(Scene* s) {
     s->start();

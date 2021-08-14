@@ -26,34 +26,16 @@ void Game::game_init() {
 }
 
 void Game::update() {
-    if (myRect != NULL) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-            myRect->move(-200 * deltaTime,0);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-            myRect->move(200 * deltaTime,0);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-            myRect->move(0,-200 * deltaTime);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-            myRect->move(0,200 * deltaTime);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
-            eraseDrawable(myRect);
-            scene_man->getCurrentScene()->erase();
-        } 
-    }
-
+    
 }
 
-void Game::eraseDrawable(sf::Drawable* drawable) {
-    int index = util::getIndex(getRenderStack(),drawable); 
-    if (index <= getRenderStack().size()) {
-        render_stack.erase(render_stack.begin() + index);
-    }
-}
+// void Game::eraseDrawable(sf::Drawable* drawable) {
+//     int index = util::getIndex(getRenderStack(),drawable); 
+//     if (index <= getRenderStack().size()) {
+//         render_stack.erase(render_stack.begin() + index);
+//     }
+// }
 
-Game& getGame() {
-    return *Game::getInstance();
+Game* getGame() {
+    return Game::getInstance();
 }

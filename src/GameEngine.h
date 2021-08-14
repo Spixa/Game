@@ -1,20 +1,13 @@
 #ifndef GAMEENGINE_H
 #define GAMEENGINE_H
 
-
-
-#include <string>
-#include "assert.h"
-#include <map>
-#include <iostream>
-#include "SFML/Graphics.hpp"
-#include <thread>
-#include <chrono>
+#include "includes.h"
 
 #define INVALID "invalid"
-#define o(x) std::cout << "Game Logs > "<< x << std::endl;
-#define out_(x) std::cout << "Game Logs > "<< x;
-#define outl(x) std::cout << "Game Logs > "<< x << std::endl;
+#define o(x) std::cout << "Game Logs > "<< x << std::endl
+#define out_(x) std::cout << "Game Logs > "<< x
+#define outl(x) std::cout << "Game Logs > "<< x << std::endl
+
 
 class Var {
 public:
@@ -67,7 +60,6 @@ public:
     };
 
     void setVar(const std::string&, const Var&);
-
 
     virtual void start();
     virtual void update(float deltaTime);
@@ -129,9 +121,9 @@ public:
     float getDeltaTime();
     virtual void update();
     void update_view() {
-        view->setSize(window->getSize().x,window->getSize().y);
+        view->setSize((float) window->getSize().x,(float) window->getSize().y);
     }
-    
+    TextureManager* getTextureManager() { return m_textureman; }
     void setCenter(sf::Vector2u loc) { view->setCenter(loc.x,loc.y); }
 
     void pushObject(GameObject*);

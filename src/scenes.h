@@ -1,9 +1,10 @@
+#ifndef SCENES_H
+#define SCENES_H
 
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "GameEngine.h"
 #include "utils.h"
-class util;
 
 enum class Scenes {
     MainmenuScene
@@ -23,16 +24,33 @@ public:
 
     Scene(std::string name);
 
+    virtual void updateScene(float deltaTime) {
+
+    }
+
     virtual void erase_derived();
     void erase();
     std::vector<sf::Drawable*>* getSceneDrawables() { return &scene_objects;}
 };
 
 
+class MenuScene
+    : public Scene {
+public:
+    MenuScene();
+    void erase_derived() override;
+    void updateScene(float deltaTime) override; 
+protected:
+    sf::Text* text_gamename;
+
+
+    sf::Font font;
+};
+
 class SceneManager : public GameObject{
 public:
     void start() {
-        m_scenes.push_back(new Scene("bro"));
+        m_scenes.push_back(new MenuScene());
         m_currscene = m_scenes[0];
     }
     void update(float deltaTime) override {
@@ -43,7 +61,6 @@ public:
         if (!m_currscene) return;
         renderScene(m_currscene,window);
     }
-
     void nextScene() {
 
     }
@@ -62,3 +79,5 @@ protected:
     Scene* m_currscene;
 };
 
+
+#endif

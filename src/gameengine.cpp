@@ -224,6 +224,7 @@ TextureManager::TextureManager() : GameObject("Texture Manager",Type::Management
 	
 	resources["player"] = "entity/player/player.png";
 	resources["tiles"] = "tiles/tiles.png";
+	resources["common_font"] = "font/common_font.ttf";
 	resources["bad"] = "bad/loc/place";
 
 }
@@ -250,7 +251,7 @@ GameEngine::GameEngine() {
 }
 
 GameEngine::GameEngine(sf::String title, sf::Vector2u size) : window_title(title), window_size(size) {
-	window = new sf::RenderWindow(sf::VideoMode(size.x,size.y),title,sf::Style::Close);
+	window = new sf::RenderWindow(sf::VideoMode(size.x,size.y),title,sf::Style::Close | sf::Style::Resize);
 	view = new sf::View();
 	window->setView(*view);
 	
@@ -302,6 +303,8 @@ void GameEngine::render() {
 
 	for (auto x : render_stack)
 		window->draw(*x);
+	for (auto x : objs_stack)
+		x->render(window);
 	
 	window->display();
 }

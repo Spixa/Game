@@ -1,7 +1,12 @@
-#ifndef GAME_h
+#ifndef GAME_H
 #define GAME_H
 #include "gameengine.h"
 #include "scenes.h"
+
+class Scene;
+class SceneManager;
+class MenuScene;
+enum class Scenes;
 
 class GUI : public GameObject {
 public:
@@ -15,7 +20,7 @@ private:
 };
 
 
-class Game : GameEngine{
+class Game : public GameEngine{
 public:
     static Game* getInstance();
     void run();
@@ -33,9 +38,7 @@ private:
     SceneManager* scene_man; 
 };
 
+Game* getGame();
 
-
-
-Game& getGame();
 
 #endif

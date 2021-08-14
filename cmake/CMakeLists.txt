@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.0.0)
 
 project(Game VERSION 0.1.0)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(CMAKE_CXX_FLAGS "-std=c++17 -lstdc++fs")  
 ## If you want to link SFML statically
 
 
@@ -15,7 +19,6 @@ elseif()
 endif()
 
 
-
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
@@ -23,3 +26,4 @@ find_package(SFML 2.5 COMPONENTS graphics window system network REQUIRED)
 
 add_executable(Game ../src/main.cpp ../src/Game.cpp ../src/gameengine.cpp ../src/scenes.cpp)
 target_link_libraries(Game sfml-graphics sfml-window sfml-system sfml-network ${CMAKE_THREAD_LIBS_INIT} -static)
+set_target_properties(Game PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/..")
