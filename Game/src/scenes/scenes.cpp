@@ -112,7 +112,7 @@ void GameScene::erase_derived() {
 }
 
 void GameScene::updateScene(float deltaTime) {
-
+    
 }
 
 ////////////////////////////////////////////

@@ -10,11 +10,12 @@ Realm::Realm() : GameObject("realm", GameObject::Type::Ingame),
 
 void Realm::render(sf::RenderWindow* window) {
     window->draw(m_tilemap);
-
+    window->draw(*m_player);
 }
 
 void Realm::update(float deltaTime) {
-
+    m_player->animateRow(1, deltaTime);
+    m_player->update(deltaTime);
 }
 
 void Realm::start() {

@@ -4,9 +4,16 @@
 #include <Game/includes.h>
 
 #define INVALID "invalid"
-#define o(x) std::cout << "[INFO] "<< x << std::endl
-#define out_(x) std::cout << ""<< x
-#define outl(x) std::cout << "[INFO] "<< x << std::endl
+
+#ifdef DEBUG
+#define     o(x) std::cout << "[INFO] "<< x << std::endl
+#define     out_(x) std::cout << ""<< x
+#define     outl(x) std::cout << "[INFO] "<< x << std::endl
+#else
+#define     o(x)
+#define     out_(x)
+#define     outl(x)
+#endif
 
 
 class Var {
