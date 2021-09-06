@@ -2,6 +2,9 @@
 #define REALM_H
 #include <Game/GameEngine/gameengine.h>
 #include <Game/realm/tilemap.h>
+#include <Game/entities/entity.h>
+#include <Game/entities/player/player.h>
+
 class Realm
     : public GameObject
 {
@@ -12,6 +15,9 @@ public:
     void render(sf::RenderWindow* window) override;
 TileMap m_tilemap;
 private:
+
+    Player* m_player;
+
     static constexpr const int level[]=  {
         0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
