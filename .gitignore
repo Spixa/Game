@@ -9,7 +9,6 @@ Makefile
 *.cbp
 CMakeScripts
 compile_commands.json
-SFML
 cmake-build-debug
 CMakeCache.txt
 cmake_install.cmake
@@ -20,6 +19,7 @@ Makefile
 *.cbp
 CMakeScripts
 compile_commands.json
-SFML
-build
+CMakeFiles
+CMakeCache
 .vs
+src/*.code-workspace

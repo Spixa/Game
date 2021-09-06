@@ -1,0 +1,4 @@
+config:
+  resources:
+    base: '%require_placeholder_api'
+    common_font: '%res_path/fonts/ayyup.ttf'
